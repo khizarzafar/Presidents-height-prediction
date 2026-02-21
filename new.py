@@ -7,24 +7,35 @@ print(data.head())
 height = np.array(data["height(cm)"])
 print(height)
 
-print("Average height is:",height.mean())
-print("Maximum height is:",height.max())
-print("Minimum height is:",height.min())
-print("Standard deviation is:",height.std())
+# 3. Descriptive Statistics
+stats = {
+    "Mean": np.mean(height),
+    "Median": np.median(height),
+    "Std Dev": np.std(height),
+    "25th Percentile": np.percentile(height, 25),
+    "75th Percentile": np.percentile(height, 75),
+}
 
-
-print("Median is:",np.median(height))
-print("25th percentile is:",np.percentile(height,25))
-print("75th percentile is:",np.percentile(height,75))
-
+print("--- Presidents Height Statistics ---")
+for label, value in stats.items():
+    print(f"{label:15}: {value:.2f} cm")
 
 
 import matplotlib.pyplot as plt
 import seaborn as sns
 
 
-plt.hist(height)
-plt.title("Height Distribution of Presidents")
-plt.xlabel("height(cm)")
-plt.ylabel("Number")
+sns.set_theme(style="whitegrid")
+plt.figure(figsize=(10, 6))
+
+# Adding a KDE (smooth curve) over histogram
+sns.histplot(height, bins=10, kde=True, color="skyblue")
+
+plt.title("Distribution of Presidents' Heights", fontsize=15)
+plt.xlabel("Height (cm)", fontsize=12)
+plt.ylabel("Frequency", fontsize=12)
+plt.axvline(
+    np.median(height), color="red", linestyle="--", label=f"Median: {np.median(height)}"
+)
+plt.legend()
 print(plt.show())
