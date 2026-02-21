@@ -2,12 +2,13 @@ import numpy as np
 import pandas as pd
 
 data = pd.read_csv("president_heights.csv")
+data.dropna(subset=['height(cm)'], inplace=True) # Data Integrity check
 print(data.head())
 
 height = np.array(data["height(cm)"])
 print(height)
 
-# 3. Descriptive Statistics
+# Descriptive Statistics
 stats = {
     "Mean": np.mean(height),
     "Median": np.median(height),
